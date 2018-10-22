@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -36,8 +38,8 @@ public class Main extends JFrame implements ActionListener {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		hc.showHero(pan, list);
-		buttonCreate(pan2, "Delete");
 		buttonCreate(pan2, "Create");
+		buttonCreate(pan2, "Delete");
 		initialize(pan2, nameCreateHero);
 		panp.setLayout(new GridLayout(3, 1));
 		panp.add(pan2, BorderLayout.NORTH);
@@ -66,11 +68,17 @@ public class Main extends JFrame implements ActionListener {
 			String newHeroName = nameCreateHero.getText();
 			hc.createHero(pan, newHeroName, list);
 		} else if (butName.equals("Delete")) {
-
-			hc.deleteHero(pan, list);
+			for (Component c : pan.getComponents()) {
+				JCheckBox chk = (JCheckBox) c;
+				System.out.println(chk.isSelected());
+				if (chk.isSelected()) {
+					String name= chk.getText().toString();
+					Hero hero = new Hero(chk.getText().toString());
+					hc.deleteHero(pan, list, name);
+				}
+			}
 		}
-		pan.setVisible(false);
-		pan.setVisible(true);
+
 	}
 
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JCheckBox;
@@ -26,11 +27,11 @@ public class HeroController {
 		if (lh.size() == 0) {
 			JLabel str = new JLabel("Aucun hero existant!!");
 			pan.add(str);
-
 		} else {
 			for (Hero hero : lh) {
 				check = new JCheckBox(hero.getNom());
 				pan.add(check);
+
 			}
 		}
 	}
@@ -40,14 +41,30 @@ public class HeroController {
 			Hero h = new Hero(hero);
 			lh.add(h);
 			pan.removeAll();
+			pan.setVisible(false);
+			pan.setVisible(true);
+			showHero(pan, lh);
 
 		}
 	}
 
-	public void deleteHero(JPanel pan, List<Hero> lh) {
-		
-		
+	public void deleteHero(JPanel pan, List<Hero> lh, String name) {
+		for (Hero hero : lh) {
+			if (hero.getNom().equals(name)) {
+				lh.remove(hero);
+			}
+		}
+		Iterator<Hero> it = lh.iterator();
+		while (it.hasNext()) {
+			if (it.next().equals(name)) {
+				it.remove();
+			}
+		}
+		pan.removeAll();
+		pan.setVisible(false);
+		pan.setVisible(true);
 		showHero(pan, lh);
+
 	}
 
 	public List<Hero> getListHero() {
