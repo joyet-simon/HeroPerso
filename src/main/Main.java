@@ -70,14 +70,16 @@ public class Main extends JFrame implements ActionListener {
 		} else if (butName.equals("Delete")) {
 			for (Component c : pan.getComponents()) {
 				JCheckBox chk = (JCheckBox) c;
-				System.out.println(chk.isSelected());
 				if (chk.isSelected()) {
-					String name= chk.getText().toString();
-					Hero hero = new Hero(chk.getText().toString());
+					String name = chk.getText().toString();
 					hc.deleteHero(pan, list, name);
 				}
 			}
 		}
+		pan.removeAll();
+		pan.setVisible(false);
+		pan.setVisible(true);
+		hc.showHero(pan, list);
 
 	}
 
