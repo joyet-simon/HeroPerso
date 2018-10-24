@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import controller.HeroController;
 import model.Hero;
@@ -19,12 +20,14 @@ import model.Hero;
 public class Main extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	HeroController hc = new HeroController();
-	List<Hero> list = new ArrayList<>();
-	JPanel pan = new JPanel();
-	JPanel pan2 = new JPanel();
-	JPanel panp = new JPanel();
+	HeroController herocontroller = new HeroController();
+	List<Hero> listHero = new ArrayList<>();
+	JPanel panListHero = new JPanel();
+	JPanel panCreateHero = new JPanel();
+	JPanel panDeleteHero = new JPanel();
+	JPanel panMain = new JPanel();
 	JTextField nameCreateHero = new JTextField();
+	JTextArea name = new JTextArea("Name new hero:");
 
 	public static void main(String[] args) {
 		new Main().setVisible(true);
@@ -37,14 +40,16 @@ public class Main extends JFrame implements ActionListener {
 		setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		hc.showHero(pan, list);
-		buttonCreate(pan2, "Create");
-		buttonCreate(pan2, "Delete");
-		initialize(pan2, nameCreateHero);
-		panp.setLayout(new GridLayout(3, 1));
-		panp.add(pan2, BorderLayout.NORTH);
-		panp.add(pan, BorderLayout.CENTER);
-		add(panp);
+		herocontroller.showHero(panListHero, listHero);
+		panCreateHero.add(name);
+		initialize(panCreateHero, nameCreateHero);
+		buttonCreate(panDeleteHero, "Delete");
+		buttonCreate(panCreateHero, "Create");
+		panMain.setLayout(new GridLayout(3, 1));
+		panMain.add(panCreateHero, BorderLayout.NORTH);
+		panMain.add(panListHero, BorderLayout.CENTER);
+		panMain.add(panDeleteHero, BorderLayout.SOUTH);
+		add(panMain);
 
 	}
 
@@ -66,20 +71,20 @@ public class Main extends JFrame implements ActionListener {
 		String butName = e.getActionCommand();
 		if (butName.equals("Create")) {
 			String newHeroName = nameCreateHero.getText();
-			hc.createHero(pan, newHeroName, list);
+			herocontroller.createHero(panListHero, newHeroName, listHero);
 		} else if (butName.equals("Delete")) {
-			for (Component c : pan.getComponents()) {
+			for (Component c : panListHero.getComponents()) {
 				JCheckBox chk = (JCheckBox) c;
 				if (chk.isSelected()) {
 					String name = chk.getText().toString();
-					hc.deleteHero(pan, list, name);
+					herocontroller.deleteHero(panListHero, listHero, name);
 				}
 			}
 		}
-		pan.removeAll();
-		pan.setVisible(false);
-		pan.setVisible(true);
-		hc.showHero(pan, list);
+		panListHero.removeAll();
+		panListHero.setVisible(false);
+		panListHero.setVisible(true);
+		herocontroller.showHero(panListHero, listHero);
 
 	}
 

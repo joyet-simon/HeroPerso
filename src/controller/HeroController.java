@@ -46,7 +46,6 @@ public class HeroController {
 		Iterator<Hero> it = lh.iterator();
 		while (it.hasNext()) {
 			if (it.next().getNom().equals(name)) {
-				System.out.println("khjkd");
 				it.remove();
 			}
 		}
